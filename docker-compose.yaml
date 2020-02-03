@@ -7,6 +7,11 @@ services:
     image: python-application
     ports:
       - "81:5000"
+    healthcheck:
+      test: wget -q -O /dev/null http://localhost:5000/ || exit 1
+      interval: 40s
+      timeout: 10s
+      retries: 3
   prometheus:
     container_name: prometheus-svc
     image: prom/prometheus
